@@ -76,8 +76,8 @@ const NitorLogo: React.FC<{ opacity: number; scale: number }> = ({
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: 8,
-      transform: `scale(${scale})`,
+      gap: 6,
+      transform: `scale(${scale * 1.15})`,
       transformOrigin: "center center",
       opacity,
     }}
@@ -90,58 +90,32 @@ const NitorLogo: React.FC<{ opacity: number; scale: number }> = ({
         position: "relative",
       }}
     >
-      <svg width="320" height="90" viewBox="0 0 320 90">
-        {/* "Nit" portion */}
+      <svg width="220" height="85" viewBox="0 0 220 85">
+        {/* Single "Nitor" text — ensures natural letter spacing */}
         <text
-          x="10"
-          y="72"
+          x="4"
+          y="68"
           fontFamily="'Georgia', 'Times New Roman', serif"
-          fontSize="72"
+          fontSize="70"
           fontWeight="400"
           fill="#1A1A1A"
           letterSpacing="-1"
         >
-          Nit
+          Nitor
         </text>
 
-        {/* "o" with red swoosh */}
-        <text
-          x="162"
-          y="72"
-          fontFamily="'Georgia', 'Times New Roman', serif"
-          fontSize="72"
-          fontWeight="400"
-          fill="#1A1A1A"
-          letterSpacing="-1"
-        >
-          o
-        </text>
-
-        {/* Red swoosh accent on the "o" */}
+        {/* Red swoosh accent positioned over the "o" glyph */}
         <path
-          d="M192 30 Q210 15, 215 25 Q220 35, 205 42 Q190 48, 180 40 Q172 34, 178 26 Q184 20, 192 30Z"
+          d="M148 28 Q164 14, 169 22 Q174 32, 161 38 Q148 44, 138 37 Q131 31, 136 24 Q141 18, 148 28Z"
           fill="#B91C1C"
         />
         <path
-          d="M192 28 Q195 20, 202 18 Q209 16, 213 22"
+          d="M148 25 Q151 18, 157 16 Q163 14, 167 19"
           fill="none"
           stroke="#B91C1C"
           strokeWidth="3"
           strokeLinecap="round"
         />
-
-        {/* "r" */}
-        <text
-          x="214"
-          y="72"
-          fontFamily="'Georgia', 'Times New Roman', serif"
-          fontSize="72"
-          fontWeight="400"
-          fill="#1A1A1A"
-          letterSpacing="-1"
-        >
-          r
-        </text>
       </svg>
     </div>
 
@@ -149,11 +123,11 @@ const NitorLogo: React.FC<{ opacity: number; scale: number }> = ({
     <div
       style={{
         fontFamily: "'Georgia', 'Times New Roman', serif",
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: 400,
         color: "#4A4A4A",
-        letterSpacing: 0.8,
-        marginTop: -8,
+        letterSpacing: 0.6,
+        marginTop: -6,
       }}
     >
       An{" "}

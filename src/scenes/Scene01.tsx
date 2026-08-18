@@ -2,65 +2,82 @@
  * Scene 01 — Pill Scale-In + Typing
  * Frames 0–90 (0:00–0:03)
  *
- * Reference: Fluid blue background. White pill scales in. Typing/reveal text.
- *
- * Phase 1: placeholder with scene label and colored background.
+ * Static visual: Blue fluid radial background with a centered white pill
+ * containing a sparkle icon and "Seeking smarter..." text.
+ * A search icon sits inside the pill on the left side.
  */
 
 import React from "react";
-import { useCurrentFrame } from "remotion";
+import { AbsoluteFill } from "remotion";
 import { FluidBackground } from "../components/FluidBackground";
 import { Pill } from "../components/Pill";
-import { AnimatedText } from "../components/AnimatedText";
+import { SparkleIcon } from "../components/icons/SparkleIcon";
+import { SearchIcon } from "../components/icons/SearchIcon";
 import { COLORS } from "../utils/colors";
+import { FONT_FAMILY, FONT_WEIGHTS } from "../utils/typography";
 import { styleFragments } from "../styles/global";
 
 export const Scene01: React.FC = () => {
-  const frame = useCurrentFrame();
-
-  // Phase 2: animate pill scale-in and text typing
-  const pillOpacity = Math.min(1, frame / 15);
-  const pillScale = Math.min(1, frame / 20);
-
   return (
-    <div style={{ ...styleFragments.absoluteFill }}>
+    <AbsoluteFill>
+      {/* Blue fluid/radial background */}
       <FluidBackground
         primaryColor={COLORS.bgDeepBlue}
         secondaryColor={COLORS.bgAzure}
+        blobs={[
+          { x: 30, y: 35, radius: 350, color: "#2563EB", blur: 140, opacity: 0.5 },
+          { x: 65, y: 55, radius: 280, color: "#3B82F6", blur: 120, opacity: 0.45 },
+          { x: 45, y: 75, radius: 220, color: "#1D4ED8", blur: 100, opacity: 0.35 },
+        ]}
       />
+
+      {/* Center content */}
       <div
         style={{
           ...styleFragments.absoluteFill,
           ...styleFragments.flexColumnCenter,
         }}
       >
-        <Pill
-          width={400}
-          height={56}
-          opacity={pillOpacity}
-          transform={`scale(${pillScale})`}
-        >
-          <AnimatedText
-            text="Scene 01 — Pill Scale-In"
-            fontSize={18}
-            fontWeight={500}
-            color={COLORS.textDark}
-          />
-        </Pill>
+        {/* Sparkle icon above the pill */}
+        <SparkleIcon
+          size={28}
+          color={COLORS.textLight}
+          opacity={0.7}
+          style={{ marginBottom: 20 }}
+        />
 
-        {/* Phase 1 label */}
-        <div
-          style={{
-            marginTop: 24,
-            color: COLORS.textLight,
-            fontSize: 14,
-            opacity: 0.5,
-            fontFamily: "monospace",
-          }}
+        {/* Main white pill */}
+        <Pill
+          width={460}
+          height={60}
+          background={COLORS.uiWhite}
+          boxShadow={`0 8px 40px ${COLORS.shadowBlue}, 0 2px 8px rgba(0, 0, 0, 0.08)`}
+          paddingHorizontal={20}
         >
-          Frames 0–90 | Frame {frame}
-        </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              width: "100%",
+            }}
+          >
+            <SearchIcon size={20} color="#94A3B8" />
+            <span
+              style={{
+                fontFamily: FONT_FAMILY,
+                fontSize: 18,
+                fontWeight: FONT_WEIGHTS.regular,
+                color: "#94A3B8",
+                letterSpacing: -0.2,
+                lineHeight: 1.3,
+              }}
+            >
+              Seeking smarter...
+            </span>
+          </div>
+        </Pill>
       </div>
-    </div>
+    </AbsoluteFill>
   );
 };

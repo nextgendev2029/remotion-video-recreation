@@ -2,70 +2,106 @@
  * Scene 07 — CTA + Checkmark
  * Frames 810–870 (0:27–0:29)
  *
- * Reference: CTA text and button. Circle/checkmark animation.
- *
- * Phase 1: placeholder with CTA pill and checkmark icon.
+ * Static visual: White background with CTA heading text,
+ * a blue CTA button, and a circular checkmark element.
  */
 
 import React from "react";
-import { useCurrentFrame, interpolate } from "remotion";
+import { AbsoluteFill } from "remotion";
 import { Pill } from "../components/Pill";
-import { AnimatedText } from "../components/AnimatedText";
-import { CheckmarkIcon } from "../components/icons";
+import { CheckmarkIcon } from "../components/icons/CheckmarkIcon";
 import { COLORS } from "../utils/colors";
+import { FONT_FAMILY, FONT_WEIGHTS } from "../utils/typography";
 import { styleFragments } from "../styles/global";
 
 export const Scene07: React.FC = () => {
-  const frame = useCurrentFrame();
-
-  const checkProgress = interpolate(frame, [15, 45], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
   return (
-    <div
+    <AbsoluteFill
       style={{
-        ...styleFragments.absoluteFill,
         background: COLORS.bgWhite,
-        ...styleFragments.flexColumnCenter,
-        gap: 32,
       }}
     >
-      <AnimatedText
-        text="Ready to get started?"
-        fontSize={40}
-        fontWeight={700}
-        color={COLORS.textDark}
-      />
-
-      <Pill width={240} height={56} background={COLORS.accent}>
-        <AnimatedText
-          text="Get Started"
-          fontSize={18}
-          fontWeight={600}
-          color={COLORS.textLight}
-        />
-      </Pill>
-
-      <CheckmarkIcon
-        size={64}
-        color={COLORS.accent}
-        progress={checkProgress}
-      />
-
       <div
         style={{
-          position: "absolute",
-          bottom: 60,
-          color: COLORS.textDark,
-          fontSize: 14,
-          opacity: 0.4,
-          fontFamily: "monospace",
+          ...styleFragments.absoluteFill,
+          ...styleFragments.flexColumnCenter,
+          gap: 36,
         }}
       >
-        Scene 07 — CTA + Checkmark | Frames 810–870 | Frame {frame}
+        {/* Checkmark circle */}
+        <div
+          style={{
+            width: 80,
+            height: 80,
+            borderRadius: "50%",
+            background: `${COLORS.accent}12`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: `0 4px 24px ${COLORS.shadowBlue}`,
+          }}
+        >
+          <CheckmarkIcon
+            size={48}
+            color={COLORS.accent}
+            fillColor={COLORS.accent}
+            checkColor={COLORS.textLight}
+            progress={1}
+          />
+        </div>
+
+        {/* CTA heading */}
+        <div
+          style={{
+            fontFamily: FONT_FAMILY,
+            fontSize: 48,
+            fontWeight: FONT_WEIGHTS.bold,
+            color: COLORS.textDark,
+            letterSpacing: -1.2,
+            lineHeight: 1.15,
+            textAlign: "center",
+            maxWidth: 600,
+          }}
+        >
+          Ready to scale?
+        </div>
+
+        {/* Subtitle */}
+        <div
+          style={{
+            fontFamily: FONT_FAMILY,
+            fontSize: 18,
+            fontWeight: FONT_WEIGHTS.regular,
+            color: COLORS.textMuted,
+            letterSpacing: -0.2,
+            lineHeight: 1.5,
+            textAlign: "center",
+            maxWidth: 400,
+          }}
+        >
+          Start your journey today
+        </div>
+
+        {/* CTA button */}
+        <Pill
+          width={220}
+          height={56}
+          background={COLORS.accent}
+          boxShadow={`0 6px 28px ${COLORS.shadowBlue}, 0 2px 8px rgba(0, 0, 0, 0.08)`}
+        >
+          <span
+            style={{
+              fontFamily: FONT_FAMILY,
+              fontSize: 18,
+              fontWeight: FONT_WEIGHTS.semibold,
+              color: COLORS.textLight,
+              letterSpacing: -0.2,
+            }}
+          >
+            Get Started
+          </span>
+        </Pill>
       </div>
-    </div>
+    </AbsoluteFill>
   );
 };

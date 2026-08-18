@@ -1,8 +1,8 @@
 /**
  * Pill component — rounded pill-shaped UI element.
  *
- * Phase 1: simple placeholder with configurable dimensions and color.
- * Phase 2: will add gradients, glassmorphism variants, inner content, and spring animations.
+ * Used across multiple scenes: search pill (Scene 1), flow pills (Scene 4),
+ * "Scale!" pill (Scene 6), CTA button (Scene 7).
  */
 
 import React from "react";
@@ -23,6 +23,10 @@ export interface PillProps {
   opacity?: number;
   /** CSS transform string */
   transform?: string;
+  /** Box shadow */
+  boxShadow?: string;
+  /** Padding left/right */
+  paddingHorizontal?: number;
   /** Child content rendered inside the pill */
   children?: React.ReactNode;
   /** Additional inline styles */
@@ -33,10 +37,12 @@ export const Pill: React.FC<PillProps> = ({
   width = 320,
   height = 56,
   background = COLORS.uiWhite,
-  borderColor = COLORS.uiBorder,
-  borderWidth = 1,
+  borderColor = "transparent",
+  borderWidth = 0,
   opacity = 1,
   transform,
+  boxShadow = `0 4px 24px ${COLORS.shadowDark}, 0 1px 4px ${COLORS.shadowDark}`,
+  paddingHorizontal = 24,
   children,
   style,
 }) => {
@@ -47,13 +53,16 @@ export const Pill: React.FC<PillProps> = ({
         height,
         borderRadius: height / 2,
         background,
-        border: `${borderWidth}px solid ${borderColor}`,
+        border: borderWidth > 0 ? `${borderWidth}px solid ${borderColor}` : "none",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         opacity,
         transform,
         overflow: "hidden",
+        boxShadow,
+        paddingLeft: paddingHorizontal,
+        paddingRight: paddingHorizontal,
         ...style,
       }}
     >

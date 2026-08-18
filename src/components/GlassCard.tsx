@@ -1,8 +1,7 @@
 /**
- * GlassCard component — glassmorphism surface.
+ * GlassCard component — glassmorphism surface with backdrop blur.
  *
- * Phase 1: simple semi-transparent card with backdrop blur placeholder.
- * Phase 2: will add refined blur values, border gradients, and shadow layers.
+ * Used in Scene 2 for the glassmorphism container over the fluid background.
  */
 
 import React from "react";
@@ -19,10 +18,18 @@ export interface GlassCardProps {
   blurRadius?: number;
   /** Border radius in pixels */
   borderRadius?: number;
+  /** Border color */
+  borderColor?: string;
+  /** Border width */
+  borderWidth?: number;
   /** CSS opacity (0–1) */
   opacity?: number;
   /** CSS transform string */
   transform?: string;
+  /** Box shadow */
+  boxShadow?: string;
+  /** Padding */
+  padding?: number;
   /** Child content */
   children?: React.ReactNode;
   /** Additional inline styles */
@@ -30,13 +37,17 @@ export interface GlassCardProps {
 }
 
 export const GlassCard: React.FC<GlassCardProps> = ({
-  width = 400,
-  height = 200,
+  width = 480,
+  height = 120,
   background = COLORS.uiGlass,
-  blurRadius = 24,
-  borderRadius = 24,
+  blurRadius = 40,
+  borderRadius = 60,
+  borderColor = COLORS.uiGlassBorder,
+  borderWidth = 1.5,
   opacity = 1,
   transform,
+  boxShadow = `0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1)`,
+  padding = 12,
   children,
   style,
 }) => {
@@ -49,13 +60,15 @@ export const GlassCard: React.FC<GlassCardProps> = ({
         backdropFilter: `blur(${blurRadius}px)`,
         WebkitBackdropFilter: `blur(${blurRadius}px)`,
         borderRadius,
-        border: `1px solid ${COLORS.uiBorder}`,
+        border: `${borderWidth}px solid ${borderColor}`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         opacity,
         transform,
         overflow: "hidden",
+        boxShadow,
+        padding,
         ...style,
       }}
     >

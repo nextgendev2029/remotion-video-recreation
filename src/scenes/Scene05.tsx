@@ -2,64 +2,63 @@
  * Scene 05 — Zoom Typography Sequence
  * Frames 540–750 (0:18–0:25)
  *
- * Reference: White-screen mask transition. "Crawl", "Walk", "Run", "Scale!"
- * style sequential zoom typography.
+ * Static visual: White background with large centered typography.
+ * Words: "Crawl", "Walk", "Run", "Scale!"
+ * Shows "Scale!" as the representative resting state (end state before Scene 6).
  *
- * Phase 1: placeholder showing the four words sequentially.
+ * IMPORTANT: Typography is centered using transform-origin: center center
+ * so that the zoom animation in Phase 3 scales from the visual center
+ * without drifting.
  */
 
 import React from "react";
-import { useCurrentFrame, interpolate } from "remotion";
-import { AnimatedText } from "../components/AnimatedText";
+import { AbsoluteFill } from "remotion";
 import { COLORS } from "../utils/colors";
+import { FONT_FAMILY, FONT_WEIGHTS } from "../utils/typography";
 import { styleFragments } from "../styles/global";
 
-const WORDS = ["Crawl", "Walk", "Run", "Scale!"];
+/** The words that appear in sequence */
+const WORDS = ["Crawl", "Walk", "Run", "Scale!"] as const;
 
 export const Scene05: React.FC = () => {
-  const frame = useCurrentFrame();
-  const totalFrames = 210;
-  const framesPerWord = totalFrames / WORDS.length;
-
-  const currentWordIndex = Math.min(
-    WORDS.length - 1,
-    Math.floor(frame / framesPerWord),
-  );
-
-  const wordFrame = frame - currentWordIndex * framesPerWord;
-  const wordOpacity = interpolate(wordFrame, [0, 10, framesPerWord - 10, framesPerWord], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // Show "Scale!" as the representative static state
+  // Phase 3 will animate through all words with zoom effect
+  const currentWord = WORDS[3];
 
   return (
-    <div
+    <AbsoluteFill
       style={{
-        ...styleFragments.absoluteFill,
         background: COLORS.bgWhite,
-        ...styleFragments.flexColumnCenter,
       }}
     >
-      <AnimatedText
-        text={WORDS[currentWordIndex]}
-        fontSize={96}
-        fontWeight={800}
-        color={COLORS.textDark}
-        opacity={wordOpacity}
-      />
-
       <div
         style={{
-          position: "absolute",
-          bottom: 60,
-          color: COLORS.textDark,
-          fontSize: 14,
-          opacity: 0.4,
-          fontFamily: "monospace",
+          ...styleFragments.absoluteFill,
+          ...styleFragments.flexColumnCenter,
         }}
       >
-        Scene 05 — Zoom Typography | Frames 540–750 | Frame {frame}
+        <div
+          style={{
+            fontFamily: FONT_FAMILY,
+            fontSize: 140,
+            fontWeight: FONT_WEIGHTS.extrabold,
+            color: COLORS.textDark,
+            letterSpacing: -4,
+            lineHeight: 1.0,
+            textAlign: "center",
+            transformOrigin: "center center",
+            // Gradient text for "Scale!"
+            background: `linear-gradient(135deg, ${COLORS.gradientStart}, ${COLORS.gradientEnd})`,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          {currentWord}
+        </div>
       </div>
-    </div>
+    </AbsoluteFill>
   );
 };
+
+export { WORDS };

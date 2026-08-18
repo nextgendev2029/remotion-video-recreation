@@ -1,14 +1,11 @@
 /**
- * Global CSS styles applied to the Remotion composition.
- *
- * Phase 1: basic resets and font setup.
- * Phase 2: will add @font-face declarations for custom fonts.
+ * Global CSS-in-JS style fragments applied across the composition.
  */
 
+import { FONT_FAMILY } from "../utils/typography";
+
 /**
- * Returns CSS string for injection into <style> tags or Remotion's global style mechanism.
- * Currently used as a reference — actual injection happens via index.css or
- * inline styles in the composition.
+ * Returns CSS string for injection. References centralized typography.
  */
 export const GLOBAL_STYLES = `
   * {
@@ -18,7 +15,7 @@ export const GLOBAL_STYLES = `
   }
 
   body {
-    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: ${FONT_FAMILY};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -33,8 +30,8 @@ export const styleFragments = {
     position: "absolute" as const,
     top: 0,
     left: 0,
-    width: "100%",
-    height: "100%",
+    width: "100%" as const,
+    height: "100%" as const,
   },
 
   /** Flexbox centering */

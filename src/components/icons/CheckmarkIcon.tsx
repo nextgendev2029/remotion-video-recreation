@@ -1,8 +1,6 @@
 /**
  * Checkmark icon — circle with checkmark SVG.
- *
- * Phase 1: basic static placeholder.
- * Phase 2: add animated stroke-draw effect.
+ * Used in Scene 7 for the confirmation/CTA element.
  */
 
 import React from "react";
@@ -11,21 +9,27 @@ export interface CheckmarkIconProps {
   size?: number;
   color?: string;
   strokeWidth?: number;
+  /** Fill color for the circle background */
+  fillColor?: string;
+  /** Checkmark stroke color (defaults to white for filled, color for outline) */
+  checkColor?: string;
   /** 0–1 progress for animated stroke draw (1 = fully drawn) */
   progress?: number;
   style?: React.CSSProperties;
 }
 
 export const CheckmarkIcon: React.FC<CheckmarkIconProps> = ({
-  size = 48,
+  size = 64,
   color = "#2563EB",
   strokeWidth = 2,
+  fillColor,
+  checkColor,
   progress = 1,
   style,
 }) => {
-  // Total path length for the checkmark (approximate)
+  const circleCircumference = 2 * Math.PI * 10;
   const checkLength = 24;
-  const circleCircumference = 2 * Math.PI * 10; // r=10
+  const resolvedCheckColor = checkColor ?? (fillColor ? "#FFFFFF" : color);
 
   return (
     <svg
@@ -35,19 +39,35 @@ export const CheckmarkIcon: React.FC<CheckmarkIconProps> = ({
       fill="none"
       style={style}
     >
+      {/* Circle background fill */}
+      {fillColor && (
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+          fill={fillColor}
+          opacity={progress}
+        />
+      )}
+
+      {/* Circle outline */}
       <circle
         cx="12"
         cy="12"
         r="10"
         stroke={color}
         strokeWidth={strokeWidth}
+        fill="none"
         strokeDasharray={circleCircumference}
         strokeDashoffset={circleCircumference * (1 - progress)}
+        strokeLinecap="round"
       />
+
+      {/* Checkmark */}
       <path
-        d="M8 12L11 15L16 9"
-        stroke={color}
-        strokeWidth={strokeWidth}
+        d="M7.5 12L10.5 15L16.5 9"
+        stroke={resolvedCheckColor}
+        strokeWidth={strokeWidth + 0.5}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeDasharray={checkLength}

@@ -2,15 +2,42 @@
 
 ## Overview
 
-A frame-accurate recreation of the Nitor Infotech reference motion-design video, built entirely with [Remotion](https://www.remotion.dev/), React, and TypeScript.
+A recreation of the Nitor Infotech reference motion-design video, built with [Remotion](https://www.remotion.dev/), React, and TypeScript.
 
-The video features 8 sequential scenes covering animated typography, glassmorphism cards, pill morphs, zoom-through sequences, floating elements, and a branded logo reveal.
+The project reproduces the original video's visual design across 8 sequential scenes with animated typography, gradient backgrounds, glassmorphism elements, and branded logo reveal.
+
+## Features
+
+- 8-scene motion design with animated transitions
+- Animated typography with character-by-character typing effects
+- Gradient and fluid backgrounds
+- Glassmorphism card with backdrop blur
+- Animated UI pills, cards, and floating decorative elements
+- SVG icons (sparkle, search, arrow, checkmark)
+- Zoom-through typography sequences
+- Reference audio track integration
+- Nitor branding with red swoosh logo accent
+- Centralized timing and design-token architecture
 
 ## Tech Stack
 
 - **React** 19
 - **TypeScript** 5.9
 - **Remotion** 4.0
+- **CSS / SVG** for styling and icons
+- **Inter** font family
+
+## Composition Specifications
+
+| Property       | Value        |
+| -------------- | ------------ |
+| Resolution     | 1920 × 1080 |
+| FPS            | 30           |
+| Duration       | ~32 seconds  |
+| Frames         | 960          |
+| Composition ID | MainVideo    |
+| Format         | MP4 (H.264)  |
+| Audio          | AAC stereo   |
 
 ## Requirements
 
@@ -29,13 +56,7 @@ npm install
 npm run dev
 ```
 
-Opens Remotion Studio at `http://localhost:3000` where you can preview, scrub, and inspect individual scenes.
-
-## Render Final Video
-
-```bash
-npx remotion render MainVideo out/final-video.mp4
-```
+Opens Remotion Studio at `http://localhost:3000` for previewing, scrubbing, and inspecting individual scenes.
 
 ## Type Check
 
@@ -43,13 +64,27 @@ npx remotion render MainVideo out/final-video.mp4
 npm run typecheck
 ```
 
+## Build
+
+```bash
+npm run build
+```
+
+## Render Final Video
+
+```bash
+npm run render
+```
+
+The rendered video is output to `out/final-video.mp4`.
+
 ## Project Structure
 
 ```
 src/
 ├── index.ts                  # Remotion entry point (registerRoot)
 ├── Root.tsx                  # Composition registration
-├── MainComposition.tsx       # Scene sequencer (Sequences + timing)
+├── MainComposition.tsx       # Scene sequencer (Sequences + timing + audio)
 ├── template.tsx              # Assignment template entry (re-exports MainComposition)
 │
 ├── scenes/                   # One component per scene
@@ -82,36 +117,32 @@ src/
 
 public/
 ├── fonts/                    # Inter font family (woff2)
-├── images/                   # Static assets
-├── audio/                    # Audio assets
-└── reference/                # Reference video
+├── audio/                    # Reference audio track (WAV)
+└── reference/                # Reference video (not required for rendering)
 ```
-
-## Composition
-
-| Property   | Value       |
-| ---------- | ----------- |
-| Resolution | 1920 × 1080 |
-| FPS        | 30          |
-| Duration   | ~32 seconds |
-| Frames     | 960         |
-| Format     | MP4 (H.264) |
 
 ## Assets
 
 - **Fonts**: Inter font family in `public/fonts/` (Regular, Medium, SemiBold, Bold, ExtraBold, Black)
+- **Audio**: Reference audio track in `public/audio/reference-audio.wav`
 - **Icons**: SVG components in `src/components/icons/` (Sparkle, Search, Arrow, Checkmark)
-- **Reference**: Original reference video in `public/reference/reference-video.mp4`
+
+## Template
+
+`src/template.tsx` is the assignment template entry point. It re-exports the validated `MainComposition` component and all composition configuration constants (`COMPOSITION_ID`, `WIDTH`, `HEIGHT`, `FPS`, `DURATION_IN_FRAMES`, `SCENE_TIMINGS`).
 
 ## Submission
 
-The final rendered video is located at:
+The repository contains the complete working source project. Generated MP4 files are excluded from Git via `.gitignore` to keep the repository lightweight.
 
-```
-out/final-video.mp4
+To produce the final rendered video from source:
+
+```bash
+npm install
+npm run render
 ```
 
-To generate it from source, run the render command above.
+The final rendered MP4 is supplied separately as part of the assignment submission.
 
 ## License
 

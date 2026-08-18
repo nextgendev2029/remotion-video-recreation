@@ -1,60 +1,46 @@
-# Nitor Motion Design — Remotion Recreation
+# Remotion Video Recreation
 
-A production-quality recreation of the Nitor reference motion-design video, built with [Remotion](https://www.remotion.dev/).
+## Overview
 
-## Video Specifications
+A frame-accurate recreation of the Nitor Infotech reference motion-design video, built entirely with [Remotion](https://www.remotion.dev/), React, and TypeScript.
 
-| Property   | Value       |
-| ---------- | ----------- |
-| Resolution | 1920 × 1080 |
-| FPS        | 30          |
-| Duration   | 32 seconds  |
-| Frames     | 960         |
-| Format     | MP4 (H.264) |
+The video features 8 sequential scenes covering animated typography, glassmorphism cards, pill morphs, zoom-through sequences, floating elements, and a branded logo reveal.
 
-## Quick Start
+## Tech Stack
 
-### Prerequisites
+- **React** 19
+- **TypeScript** 5.9
+- **Remotion** 4.0
 
-- [Node.js](https://nodejs.org/) ≥ 18
+## Requirements
+
+- Node.js ≥ 18
 - npm ≥ 9
 
-### Install Dependencies
+## Installation
 
 ```bash
 npm install
 ```
 
-### Open Remotion Studio (Preview)
+## Run Remotion Studio
 
 ```bash
 npm run dev
 ```
 
-This launches Remotion Studio in your browser, where you can preview the composition, scrub through frames, and inspect individual scenes.
+Opens Remotion Studio at `http://localhost:3000` where you can preview, scrub, and inspect individual scenes.
 
-### Render the Final Video
+## Render Final Video
 
 ```bash
-npx remotion render MainVideo out/video.mp4
+npx remotion render MainVideo out/final-video.mp4
 ```
 
-Or render a specific frame range for testing:
+## Type Check
 
 ```bash
-npx remotion render MainVideo out/test.mp4 --frames=0-90
-```
-
-### Type Check
-
-```bash
-npx tsc --noEmit
-```
-
-### Lint
-
-```bash
-npm run lint
+npm run typecheck
 ```
 
 ## Project Structure
@@ -62,19 +48,19 @@ npm run lint
 ```
 src/
 ├── index.ts                  # Remotion entry point (registerRoot)
-├── index.css                 # Global CSS reset
 ├── Root.tsx                  # Composition registration
 ├── MainComposition.tsx       # Scene sequencer (Sequences + timing)
+├── template.tsx              # Assignment template entry (re-exports MainComposition)
 │
 ├── scenes/                   # One component per scene
 │   ├── Scene01.tsx           # 0:00–0:03  Pill scale-in + typing
 │   ├── Scene02.tsx           # 0:03–0:06  Glassmorphism pill + blobs
-│   ├── Scene03.tsx           # 0:06–0:10  Rapid text transitions
-│   ├── Scene04.tsx           # 0:10–0:18  Sequential typography + arrows
-│   ├── Scene05.tsx           # 0:18–0:25  Zoom typography sequence
+│   ├── Scene03.tsx           # 0:06–0:10  Text reveal sequence
+│   ├── Scene04.tsx           # 0:10–0:18  Word cascade + pill carousel
+│   ├── Scene05.tsx           # 0:18–0:25  Zoom typography (Crawl/Walk/Run)
 │   ├── Scene06.tsx           # 0:25–0:27  Scale pill + floating elements
-│   ├── Scene07.tsx           # 0:27–0:29  CTA + checkmark
-│   └── Scene08.tsx           # 0:29–0:32  Logo animation
+│   ├── Scene07.tsx           # 0:27–0:29  Text sequence + CTA pill
+│   └── Scene08.tsx           # 0:29–0:32  Checkmark + logo reveal
 │
 ├── components/               # Reusable UI primitives
 │   ├── Pill.tsx
@@ -82,48 +68,50 @@ src/
 │   ├── AnimatedText.tsx
 │   ├── FluidBackground.tsx
 │   └── icons/
-│       ├── ArrowIcon.tsx
-│       ├── SearchIcon.tsx
-│       ├── SparkleIcon.tsx
-│       ├── CheckmarkIcon.tsx
-│       └── index.ts
 │
 ├── animations/               # Motion presets and helpers
 │   ├── easing.ts
 │   ├── springs.ts
 │   └── interpolation.ts
 │
-├── utils/                    # Constants and configuration
-│   ├── constants.ts          # FPS, WIDTH, HEIGHT, DURATION_IN_FRAMES
-│   ├── timing.ts             # Centralized scene timing table
-│   └── colors.ts             # Design-token color palette
-│
-└── styles/
-    └── global.ts             # Shared style fragments
+└── utils/                    # Constants and configuration
+    ├── constants.ts          # Resolution, FPS, duration
+    ├── timing.ts             # Centralized scene timing table
+    ├── colors.ts             # Design-token color palette
+    └── typography.ts         # Font families and weights
 
 public/
-├── fonts/                    # Custom typefaces (Phase 2)
-├── images/                   # Logos, backgrounds
-├── audio/                    # Music, SFX
-└── reference/                # Reference screenshots
+├── fonts/                    # Inter font family (woff2)
+├── images/                   # Static assets
+├── audio/                    # Audio assets
+└── reference/                # Reference video
 ```
 
-## Architecture Decisions
+## Composition
 
-- **Centralized timing**: All scene start/end frames live in `src/utils/timing.ts`. Adjusting scene boundaries never requires touching individual components.
-- **Centralized constants**: Video resolution, FPS, and total frame count are defined once in `src/utils/constants.ts`.
-- **Component-per-scene**: Each of the 8 scenes is an isolated React component, making parallel development straightforward.
-- **Reusable primitives**: Common visual elements (Pill, GlassCard, AnimatedText, FluidBackground, icons) are shared across scenes.
-- **Animation presets**: Easing curves and spring configs are defined centrally in `src/animations/` for consistent motion feel.
+| Property   | Value       |
+| ---------- | ----------- |
+| Resolution | 1920 × 1080 |
+| FPS        | 30          |
+| Duration   | ~32 seconds |
+| Frames     | 960         |
+| Format     | MP4 (H.264) |
 
-## Phases
+## Assets
 
-| Phase | Status | Description |
-| ----- | ------ | ----------- |
-| 1     | ✅ Done | Project setup, architecture, placeholder scenes |
-| 2     | 🔲 Next | Visual implementation — gradients, typography, animations |
-| 3     | 🔲      | Polish — exact timing, easing, asset integration |
-| 4     | 🔲      | Final review and render |
+- **Fonts**: Inter font family in `public/fonts/` (Regular, Medium, SemiBold, Bold, ExtraBold, Black)
+- **Icons**: SVG components in `src/components/icons/` (Sparkle, Search, Arrow, Checkmark)
+- **Reference**: Original reference video in `public/reference/reference-video.mp4`
+
+## Submission
+
+The final rendered video is located at:
+
+```
+out/final-video.mp4
+```
+
+To generate it from source, run the render command above.
 
 ## License
 

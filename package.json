@@ -22,6 +22,8 @@
   "scripts": {
     "dev": "remotion studio",
     "build": "remotion bundle",
+    "render": "remotion render MainVideo out/final-video.mp4",
+    "typecheck": "tsc --noEmit",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },

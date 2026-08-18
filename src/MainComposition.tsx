@@ -7,7 +7,7 @@
  */
 
 import React from "react";
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
 import { SCENE_TIMINGS } from "./utils/timing";
 import { COLORS } from "./utils/colors";
 
@@ -38,6 +38,9 @@ const SCENE_COMPONENTS: Record<number, React.FC> = {
 export const MainComposition: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.bgWhite }}>
+      {/* Reference audio track — plays across the full composition */}
+      <Audio src={staticFile("audio/reference-audio.wav")} />
+
       {SCENE_TIMINGS.map((scene) => {
         const SceneComponent = SCENE_COMPONENTS[scene.id];
         if (!SceneComponent) return null;
